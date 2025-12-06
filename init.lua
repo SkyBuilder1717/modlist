@@ -63,7 +63,7 @@ if core.registered_chatcommands["mods"] then
     local formspec = [[
             size[13,6.5]
             label[0,-0.1;%s]
-            tablecolumns[color;tree;text,tooltip=%s;text,tooltip=%s]
+            tablecolumns[color;tree;text;text,tooltip=%s;text,tooltip=%s]
             table[0,0.5;12.8,5.5;list;%s;0]
             button_exit[5,6;3,1;quit;%s]
         ]]
@@ -73,14 +73,14 @@ if core.registered_chatcommands["mods"] then
 
     local function build_mods_formspec(name)
         local rows = {}
-        rows[1] = "#fff,0,"..F(Smodlist("Mod name"))..","..F(Sbuiltin("Description"))
+        rows[1] = "#fff,0,ID,"..F(Smodlist("Mod name"))..","..F(Sbuiltin("Description"))
 
         local updates = {}
 
         for name, data in pairs(modlisting) do
-            rows[#rows + 1] = ("%s,0,%s,%s"):format(
+            rows[#rows + 1] = ("%s,0,%s,%s,%s"):format(
                 (data.status == "update" and COLOR_BLUE) or (data.status == "failed" and COLOR_RED) or (data.status == "okay" and COLOR_GREEN) or COLOR_GRAY,
-                    F(data.title), F(data.desc))
+                    name, (name ~= F(data.title) and F(data.title)) or "", F(data.desc))
         end
         
         local hints = F(Smodlist("* blue - needs an update")).."\n"..

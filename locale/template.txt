@@ -7,7 +7,7 @@ Adds new UI for /mods command=
 ## UI
 Currently Installed mods=
 # Column
-Mod name=
+Mod Title=
 # Tooltips
 * blue - needs an update=
 * green - checking finished successfully=
