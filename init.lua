@@ -63,7 +63,7 @@ if core.registered_chatcommands["mods"] then
     local formspec = [[
             size[13,6.5]
             label[0,-0.1;%s]
-            tablecolumns[color;tree;text;text]
+            tablecolumns[color;tree;text,tooltip=%s;text,tooltip=%s]
             table[0,0.5;12.8,5.5;list;%s;0]
             button_exit[5,6;3,1;quit;%s]
         ]]
@@ -82,9 +82,16 @@ if core.registered_chatcommands["mods"] then
                 (data.status == "update" and COLOR_BLUE) or (data.status == "failed" and COLOR_RED) or (data.status == "okay" and COLOR_GREEN) or COLOR_GRAY,
                     F(data.title), F(data.desc))
         end
+        
+        local hints = F(Smodlist("* blue - needs an update")).."\n"..
+            F(Smodlist("* green - checking finished successfully")).."\n"..
+            F(Smodlist("* red - failed to check for updates")).."\n"..
+            F(Smodlist("* grey - offline mod, doesn't need an update"))
 
         return formspec:format(
-                F(Smodlist("Currently Installed mods:")),
+                F(Smodlist("Currently Installed mods") .. ":"),
+                hints,
+                hints,
                 table.concat(rows, ","),
                 F(Sbuiltin("Close"))
             )

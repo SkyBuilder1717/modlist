@@ -1,7 +1,15 @@
 # textdomain: modlist
 
-Currently Installed mods=
-Mod name=
+## ContentDB
+Mod list=
+Adds new UI for /mods command=
 
-No results.=
-Needs update:=
+## UI
+Currently Installed mods=
+# Column
+Mod name=
+# Tooltips
+* blue - needs an update=
+* green - checking finished successfully=
+* red - failed to check for updates=
+* grey - offline mod, doesn't need an update=
