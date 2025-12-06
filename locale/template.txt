@@ -12,4 +12,5 @@ Mod Title=
 * blue - needs an update=
 * green - checking finished successfully=
 * red - failed to check for updates=
+* cyan - check for updates is in progress=
 * grey - offline mod, doesn't need an update=

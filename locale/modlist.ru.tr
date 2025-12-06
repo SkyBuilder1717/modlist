@@ -12,4 +12,5 @@ Mod Title=Имя Мода
 * blue - needs an update=* синий - нужно обновить
 * green - checking finished successfully=* зелёный - прошёл проверку успешно
 * red - failed to check for updates=* красный - не удалось проверить на обновления
+* cyan - check for updates is in progress=* бирюзовый - проверка на обновления в прогрессе
 * grey - offline mod, doesn't need an update=* серый - оффлайн мод, в обновлении не нуждается

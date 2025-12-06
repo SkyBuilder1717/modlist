@@ -47,7 +47,7 @@ local function scan_mods()
         local author = content:match("author%s*=%s*(.-)\n") or content:match("author%s*=%s*(.-)$")
         local S = core.get_translator(name)
 
-        modlisting[name] = {title = title and S(title) or name, desc = desc and S(desc) or "", release = rel or "", author = author or "", status = ""}
+        modlisting[name] = {title = title and S(title) or name, desc = desc and S(desc) or "", release = rel or "", author = author or "", status = ((author ~= "" and rel ~= "" and author ~= nil and rel ~= nil) and "progress") or ""}
     end
 end
 
@@ -58,6 +58,7 @@ if core.registered_chatcommands["mods"] then
     local COLOR_RED = "#f50"
     local COLOR_BLUE = "#7af"
     local COLOR_GREEN = "#7f7"
+    local COLOR_CYAN = "#2bb"
     local COLOR_GRAY = "#bbb"
 
     local formspec = [[
@@ -79,13 +80,14 @@ if core.registered_chatcommands["mods"] then
 
         for name, data in pairs(modlisting) do
             rows[#rows + 1] = ("%s,0,%s,%s,%s"):format(
-                (data.status == "update" and COLOR_BLUE) or (data.status == "failed" and COLOR_RED) or (data.status == "okay" and COLOR_GREEN) or COLOR_GRAY,
+                (data.status == "update" and COLOR_BLUE) or (data.status == "failed" and COLOR_RED) or (data.status == "progress" and COLOR_CYAN) or (data.status == "okay" and COLOR_GREEN) or COLOR_GRAY,
                     name, (name ~= F(data.title) and F(data.title)) or "", F(data.desc))
         end
         
         local hints = F(Smodlist("* blue - needs an update")).."\n"..
             F(Smodlist("* green - checking finished successfully")).."\n"..
             F(Smodlist("* red - failed to check for updates")).."\n"..
+            F(Smodlist("* cyan - check for updates is in progress")).."\n"..
             F(Smodlist("* grey - offline mod, doesn't need an update"))
 
         return formspec:format(
