@@ -1,0 +1,7 @@
+# textdomain: modlist
+
+Currently Installed mods=
+Mod name=
+
+No results.=
+Needs update:=
