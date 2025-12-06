@@ -74,7 +74,7 @@ if core.registered_chatcommands["mods"] then
 
     local function build_mods_formspec(name)
         local rows = {}
-        rows[1] = "#fff,0,ID,"..F(Smodlist("Mod name"))..","..F(Sbuiltin("Description"))
+        rows[1] = "#fff,0,ID,"..F(Smodlist("Mod Title"))..","..F(Sbuiltin("Description"))
 
         local updates = {}
 
