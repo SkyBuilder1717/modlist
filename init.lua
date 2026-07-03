@@ -23,6 +23,11 @@ local function check_for_updates()
                 modlisting[name].status = "failed"
                 return
             end
+            if not core.parse_json(result.data) or not core.parse_json(result.data)[1] or core.parse_json(result.data)[1].id then
+                core.log("error", "[modlist] cannot get releases of \""..name.."\"!")
+                modlisting[name].status = "failed"
+                return
+            end
             local release = core.parse_json(result.data)[1].id
             if release ~= tonumber(data.release) then
                 modlisting[name].status = "update"
@@ -37,8 +42,12 @@ end
 
 local function scan_mods()
     for _, name in pairs(core.get_modnames()) do
-        local path = core.get_modpath(name) .. "\\mod.conf"
+        local path = core.get_modpath(name) .. DIR_DELIM .. "mod.conf"
         local f = io.open(path, "r")
+        if not f then
+            core.log("error", "[modlist] \"" .. path .. "\" is not found!!")
+            goto continue
+        end
         local content = f:read("*all")
         f:close()
         local title = content:match("title%s*=%s*(.-)\n") or content:match("title%s*=%s*(.-)$")
@@ -47,7 +56,15 @@ local function scan_mods()
         local author = content:match("author%s*=%s*(.-)\n") or content:match("author%s*=%s*(.-)$")
         local S = core.get_translator(name)
 
-        modlisting[name] = {title = title and S(title) or name, desc = desc and S(desc) or "", release = rel or "", author = author or "", status = ((author ~= "" and rel ~= "" and author ~= nil and rel ~= nil) and "progress") or ""}
+        modlisting[name] = {
+            title = title and S(title) or name,
+            desc = desc and S(desc) or "",
+            release = rel or "",
+            author = author or "",
+            status = ((author ~= "" and rel ~= "" and author ~= nil and rel ~= nil) and "progress") or ""
+        }
+
+        ::continue::
     end
 end
 
